@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SlutProjekt_Bank.Classes
 {
-    public class Account : User
+    public class Account : Client
     {
         public decimal Balance { get; set; }
         public string Currency { get; set; }
-        public Account( string name, string password, string surName, string email, int phoneNumber, string address, int postalCode, string city, string country, decimal balance, string currency) 
-            : base(name, password, surName, email, phoneNumber, address, postalCode, city, country)
+        public Account(string userName, string password, string name, string surName, string email, int phoneNumber, string address, int postalCode, string city, string country, decimal balance, string currency) 
+            : base(userName, password, name ,surName , email, phoneNumber, address, postalCode, city, country)
         {
             Balance = balance;
             Currency = currency;
