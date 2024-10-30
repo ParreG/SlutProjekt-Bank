@@ -14,10 +14,10 @@ namespace SlutProjekt_Bank.Classes
         public int PostalCode = postalCode;
         public string City = city;
         public string Country = country;
-
-        public void CreateAccount(Client client)
+        public string UserName = userName;
+        public void CreateAccount(Client client,decimal initialBalance, string currency)
         {
-            Account account = new Account(client);
+            Account account = new Account(client, initialBalance, currency);
         }
 
         public void Deposit(Account account, decimal amount)
@@ -27,13 +27,28 @@ namespace SlutProjekt_Bank.Classes
 
         public void Withdraw(Account account, decimal amount)
         {
-            account.Balance -= amount;
+            if (account.Balance >= amount)
+            {
+                account.Balance -= amount;
+            }
+            else
+            {
+                Console.WriteLine("Du har inte tillräckligt med pengar på kontot");
+            }
         }
 
         public void Transfer(Account account1, Account account2, decimal amount)
         {
-            account1.Balance -= amount;
-            account2.Balance += amount;
+            if (account1.Balance >= amount)
+            {
+                account1.Balance -= amount;
+                account2.Balance += amount;
+            }
+            else
+            {
+                Console.WriteLine("Du har inte tillräckligt med pengar på kontot");
+            }
+
         }
 
         public void ChangePassword(User user, string newPassword)
