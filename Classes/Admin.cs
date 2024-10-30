@@ -10,7 +10,7 @@ namespace SlutProjekt_Bank.Classes
         : User(password, name, surName, email, phoneNumber, address, postalCode, city, country)
     {
 
-
+        // Create a new client
         public void CreateClient()
         {
             Console.WriteLine("Username: "); string userName = Console.ReadLine();
@@ -29,11 +29,6 @@ namespace SlutProjekt_Bank.Classes
         public void DeleteClient(Client client)
         {
             client = null;
-        }
-
-        public void CreateAccount(Client client)
-        {
-            Account account = new Account(client);
         }
 
         public void DeleteAccount(Account account)
