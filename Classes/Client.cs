@@ -15,6 +15,11 @@ namespace SlutProjekt_Bank.Classes
         public string City = city;
         public string Country = country;
 
+        public void CreateAccount(Client client)
+        {
+            Account account = new Account(client);
+        }
+
         public void Deposit(Account account, decimal amount)
         {
             account.Balance += amount;
