@@ -10,44 +10,18 @@ namespace SlutProjekt_Bank.Classes
     {
         public decimal Balance { get; set; }
         public string Currency { get; set; }
-        public Account(string userName, string password, string name, string surName, string email, int phoneNumber, string address, int postalCode, string city, string country, decimal balance, string currency) 
-            : base(userName, password, name ,surName , email, phoneNumber, address, postalCode, city, country)
+
+        public Account(Client client, decimal balance, string currency)
+            : base(client.UserName, client.Password, client.Name, client.Surname, client.Email, client.Phone, client.Address, client.PostalCode, client.City, client.Country)
         {
             Balance = balance;
             Currency = currency;
         }
 
-        public void Deposit(decimal amount)
-        {
-            Balance += amount;
-        }
-        public void Withdraw(decimal amount)
-        {
-            if (Balance >= amount)
-            {
-                Balance -= amount;
-            }
-            else
-            {
-                Console.WriteLine("Insufficient funds.");
-            }
-        }
         public void DisplayBalance()
         {
             Console.WriteLine($"Current balance: {Balance}");
         }
-        public void TransferFunds(Account recipient, decimal amount)
-        {
-            if (Balance >= amount)
-            {
-                Balance -= amount;
-                recipient.Deposit(amount);
-                Console.WriteLine($"Transfer of {amount} to {recipient.Name} successful.");
-            }
-            else
-            {
-                Console.WriteLine("Insufficient funds for transfer.");
-            }
-        }
+
     }
 }
