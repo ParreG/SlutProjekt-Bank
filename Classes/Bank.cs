@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SlutProjekt_Bank.Classes
 {
     public class Bank
     {
 
-
+        // HÄR ÄR MENYN
         public void ShowMenu()
         {
             //En flagga som håller koll på om programmet är aktivt. Denna hjälper mig att avsluta programmet ganska direkt om programavslut knappen trycks i menyn. 
@@ -18,6 +19,7 @@ namespace SlutProjekt_Bank.Classes
             //Variabel för att hålla reda på valt menyval.
             int menuSelected = 0;
 
+            
             //Lägger till menyval i en array.Samtigit lägger jag en tappsteg på de olika valen bara för desgin mässig. 
             string[] menuOptions = new string[] { "Menyval1\t", "Menyval2\t\t", "Menyval3\t\t", "Menyval3\t\t" };
 
@@ -25,6 +27,10 @@ namespace SlutProjekt_Bank.Classes
             {
                 Console.Clear();
                 Console.CursorVisible = false;
+
+                Console.WriteLine("Hej och välkommen till bankens meny.");
+                Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\". \nTryck på \"Ënter\" när du vill välja den menyn du är nöjd med.");
+                Console.WriteLine();
 
                 //Loopar igenom menyvalen och markerar det valda alternativet. Detta gör att jag inte behöver repetera samma del flera gånger. 
                 for (int i = 0; i < menuOptions.Length; i++)
