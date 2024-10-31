@@ -21,7 +21,7 @@ namespace SlutProjekt_Bank.Classes
 
             
             //Lägger till menyval i en array.Samtigit lägger jag en tappsteg på de olika valen bara för desgin mässig. 
-            string[] menuOptions = new string[] { "Menyval1\t\t", "Menyval2\t\t", "Menyval3\t\t", "Menyval3\t\t", "Avsluta programmet\t" };
+            string[] menuOptions = new string[] { "Inloggning\t\t", "Registrering\t\t", "Avsluta programmet\t" };
 
             while (programAktivt)
             {
