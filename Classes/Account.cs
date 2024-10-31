@@ -19,7 +19,20 @@ namespace SlutProjekt_Bank.Classes
             AccountName = accountName;
         }
 
-        
+        public void SavingAccount(Client client, decimal balance, string currency)
+        {
+            Console.WriteLine("Vad härligt att du vill öppna ett sparkonto.");
+            Console.WriteLine("Vad ska sparkontot heta: ");
+            string savingAccountName = Console.ReadLine();
+            Account savingAccount = new Account(client, balance, currency, savingAccountName);
+
+
+            // Hur mycket ska överföras till kontot? 
+            // från vilket konto?
+
+            //Måste ta med TransferMoney(); ?
+        }
+
         public void DisplayBalance()
         {
             Console.WriteLine($"Current balance: {Balance}");
