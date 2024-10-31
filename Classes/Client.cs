@@ -66,24 +66,24 @@ namespace SlutProjekt_Bank.Classes
             user.Phone = newPhoneNumber;
         }
 
-        //public void ChangeAddress(User user, string newAddress)
-        //{
-        //    user.Address = newAddress;
-        //}
+        public void ChangeAddress(User user, string newAddress)
+        {
+            user.Address = newAddress;
+        }
 
-        //public void ChangePostalCode(User user, int newPostalCode)
-        //{
-        //    user.PostalCode = newPostalCode;
-        //}
+        public void ChangePostalCode(User user, int newPostalCode)
+        {
+            user.PostalCode = newPostalCode;
+        }
 
-        //public void ChangeCity(User user, string newCity)
-        //{
-        //    user.City = newCity;
-        //}
+        public void ChangeCity(User user, string newCity)
+        {
+            user.City = newCity;
+        }
 
-        //public void ChangeCountry(User user, string newCountry)
-        //{
-        //    user.Country = newCountry;
-        //}
+        public void ChangeCountry(User user, string newCountry)
+        {
+            user.Country = newCountry;
+        }
     }
 }

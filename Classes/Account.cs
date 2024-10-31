@@ -18,6 +18,7 @@ namespace SlutProjekt_Bank.Classes
             Currency = currency;
         }
 
+     
         public void DisplayBalance()
         {
             Console.WriteLine($"Current balance: {Balance}");
