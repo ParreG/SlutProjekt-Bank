@@ -19,6 +19,7 @@ namespace SlutProjekt_Bank.Classes
             AccountName = accountName;
         }
 
+     
         public void DisplayBalance()
         {
             Console.WriteLine($"Current balance: {Balance}");
