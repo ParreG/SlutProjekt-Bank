@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SlutProjekt_Bank.Classes
 {
+    
     public class Client(string userName, string password, string name, string surName, string email, int phoneNumber, string address, int postalCode, string city, string country) 
         : User(password, name, surName, email, phoneNumber, address, postalCode, city, country)
     {

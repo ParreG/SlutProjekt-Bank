@@ -19,27 +19,35 @@ namespace SlutProjekt_Bank.Classes
             int menuSelected = 0;
 
             //Lägger till menyval i en array.Samtigit lägger jag en tappsteg på de olika valen bara för desgin mässig. 
-            string[] menuOptions = new string[] { "Menyval1\t", "Menyval2\t\t", "Menyval3\t\t", "Menyval3\t\t" };
+            string[] menuOptions = new string[] { "Menyval1\t\t", "Menyval2\t\t", "Menyval3\t\t", "Menyval3\t\t" };
 
             while (programAktivt)
             {
                 Console.Clear();
                 Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("╔═════════════════════════════════╗");
+                Console.WriteLine("║         Välkommen till Menyn    ║");
+                Console.WriteLine("╚═════════════════════════════════╝");
+                Console.ResetColor();
 
                 //Loopar igenom menyvalen och markerar det valda alternativet. Detta gör att jag inte behöver repetera samma del flera gånger. 
+                Console.WriteLine("╔═════════════════════════════════╗");
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
                     if (i == menuSelected)
                     {
                         //För att menyn ska synas bättre la jag till en pil innan menyn också
-                        Console.WriteLine("->" + menuOptions[i] + " <------");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine($"║ > {menuOptions[i].PadRight(15)} <   ║");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine(menuOptions[i]);
+                        Console.WriteLine($"║   {menuOptions[i].PadRight(15)}     ║");
                     }
                 }
-
+                Console.WriteLine("╚═════════════════════════════════╝");
                 //Läser in användarens tangenttryck.
                 var keyPressed = Console.ReadKey();
 

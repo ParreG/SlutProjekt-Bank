@@ -14,6 +14,10 @@ namespace SlutProjekt_Bank.Classes
         public string Surname = surName;
         public string Email = email;
         public int Phone = phoneNumber;
+        public string Address = address;
+        public int PostalCode = postalCode;
+        public string City = city;
+        public string Country = country;
 
         // Prints the user information
         public void UserInformation()
