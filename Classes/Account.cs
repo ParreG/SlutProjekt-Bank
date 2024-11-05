@@ -12,7 +12,7 @@ namespace SlutProjekt_Bank.Classes
         public string Currency { get; set; }
         public string AccountName { get; set; }
         public Account(Client client, decimal balance, string currency, string accountName)
-            : base(client.UserName, client.Password, client.Name, client.Surname, client.Email, client.Phone, client.Address, client.PostalCode, client.City, client.Country)
+            : base(client.Password, client.Name, client.Surname, client.Email)
         {
             Balance = balance;
             Currency = currency;

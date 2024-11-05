@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace SlutProjekt_Bank.Classes
 {
-    public class Client(string userName, string password, string name, string surName, string email, int phoneNumber, string address, int postalCode, string city, string country) 
-        : User(password, name, surName, email, phoneNumber, address, postalCode, city, country)
+    public class Client(string password, string name, string surName, string email) 
+        : User(password, name, surName, email)
     {
-        public string Address = address;
-        public int PostalCode = postalCode;
-        public string City = city;
-        public string Country = country;
-        public string UserName = userName;
+        public List<Account> Accounts { get; set; }
+
         public void CreateAccount(Client client,decimal initialBalance, string currency, string accountName)
         {
             Account account = new Account(client, initialBalance, currency, accountName);
