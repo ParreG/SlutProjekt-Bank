@@ -6,6 +6,7 @@ namespace SlutProjekt_Bank
     {
         static void Main(string[] args)
         {
+            //Console.WriteLine("Hej Abdi");
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             Bank bank = new Bank();

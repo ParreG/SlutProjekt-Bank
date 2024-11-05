@@ -13,6 +13,7 @@ namespace SlutProjekt_Bank.Classes
         // HÄR ÄR MENYN
         public void ShowMenu()
         {
+            
             //En flagga som håller koll på om programmet är aktivt. Denna hjälper mig att avsluta programmet ganska direkt om programavslut knappen trycks i menyn. 
             bool programAktivt = true;
 
