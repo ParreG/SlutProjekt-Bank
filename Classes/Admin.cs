@@ -18,6 +18,7 @@ namespace SlutProjekt_Bank.Classes
             Console.WriteLine("Password: "); string password = Console.ReadLine();
             Console.WriteLine("Email: "); string email = Console.ReadLine();
             Client client = new Client(password, name, surName, email);
+            Security.Users.Add(email, password);
         }
 
         public void DeleteClient(Client client)
