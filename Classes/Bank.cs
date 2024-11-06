@@ -17,7 +17,8 @@ namespace SlutProjekt_Bank.Classes
             AccountServices accountServices = new AccountServices();
             bool programAktivt = true;
             int menuSelected = 0;
-            string[] menuOptions = new string[] { "Inloggning\t\t", "Registrering\t\t", "Avsluta programmet\t" };
+            string[] menuOptions = new string[] { "Inloggning", "Registrering", "Avsluta programmet" };
+            int menuWidth = 35; // Adjust this value to change the menu width
 
             while (programAktivt)
             {
@@ -25,30 +26,29 @@ namespace SlutProjekt_Bank.Classes
                 Console.CursorVisible = false;
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("╔═════════════════════════════════╗");
-                Console.WriteLine("║         Välkommen till Menyn    ║");
-                Console.WriteLine("╚═════════════════════════════════╝");
+                Console.WriteLine("║" + "Välkommen till Menyn".PadLeft((menuWidth + "Välkommen till Menyn".Length) / 2).PadRight(menuWidth - 2) + "║");
+                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
                 Console.ResetColor();
 
                 Console.WriteLine("Hej och välkommen till bankens meny.");
-                Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\". \nTryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
+                Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\".");
+                Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
                 Console.WriteLine();
-
-                //Loopar igenom menyvalen och markerar det valda alternativet. Detta gör att jag inte behöver repetera samma del flera gånger. 
+                Console.WriteLine("╔═════════════════════════════════╗");
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
                     if (i == menuSelected)
                     {
-                        //För att menyn ska synas bättre la jag till en pil innan menyn också
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine($"║ > {menuOptions[i].PadRight(15)} <   ║");
+                        Console.WriteLine("║ > " + menuOptions[i].PadRight(menuWidth - 7) + " <║");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"║   {menuOptions[i].PadRight(15)}     ║");
+                        Console.WriteLine("║   " + menuOptions[i].PadRight(menuWidth - 5) + "║");
                     }
                 }
-                Console.WriteLine("╚═════════════════════════════════╝");
+                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
@@ -67,17 +67,14 @@ namespace SlutProjekt_Bank.Classes
                         switch (menuSelected)
                         {
                             case 0:
-                                // Inloggning
                                 Console.WriteLine("Du valde Inloggning");
-                                //Kod för inlogg
+                                // Implement login logic here
                                 break;
                             case 1:
-                                // Registrering
                                 Console.WriteLine("Du valde Registrering");
-                                //kod för registrering
+                                // Implement registration logic here
                                 break;
                             case 2:
-                                // Avsluta programmet
                                 Console.WriteLine("Avslutar programmet...");
                                 programAktivt = false;
                                 break;
@@ -91,6 +88,8 @@ namespace SlutProjekt_Bank.Classes
                 }
             }
         }
+
+
 
     }
 }
