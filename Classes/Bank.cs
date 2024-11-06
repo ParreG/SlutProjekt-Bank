@@ -23,22 +23,32 @@ namespace SlutProjekt_Bank.Classes
             {
                 Console.Clear();
                 Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("╔═════════════════════════════════╗");
+                Console.WriteLine("║         Välkommen till Menyn    ║");
+                Console.WriteLine("╚═════════════════════════════════╝");
+                Console.ResetColor();
 
                 Console.WriteLine("Hej och välkommen till bankens meny.");
                 Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\". \nTryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
                 Console.WriteLine();
 
+                //Loopar igenom menyvalen och markerar det valda alternativet. Detta gör att jag inte behöver repetera samma del flera gånger. 
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
                     if (i == menuSelected)
                     {
-                        Console.WriteLine("->" + menuOptions[i] + " <------");
+                        //För att menyn ska synas bättre la jag till en pil innan menyn också
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine($"║ > {menuOptions[i].PadRight(15)} <   ║");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine(menuOptions[i]);
+                        Console.WriteLine($"║   {menuOptions[i].PadRight(15)}     ║");
                     }
                 }
+                Console.WriteLine("╚═════════════════════════════════╝");
 
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
