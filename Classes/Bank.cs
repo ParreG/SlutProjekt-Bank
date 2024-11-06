@@ -34,7 +34,7 @@ namespace SlutProjekt_Bank.Classes
                 Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\".");
                 Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
                 Console.WriteLine();
-                Console.WriteLine("╔═════════════════════════════════╗");
+                Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
                     if (i == menuSelected)
