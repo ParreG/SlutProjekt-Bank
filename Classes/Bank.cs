@@ -72,7 +72,9 @@ namespace SlutProjekt_Bank.Classes
                                 break;
                             case 1:
                                 Console.WriteLine("Du valde Registrering");
+                                
                                 // Implement registration logic here
+                                
                                 break;
                             case 2:
                                 Console.WriteLine("Avslutar programmet...");
