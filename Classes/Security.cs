@@ -9,7 +9,7 @@ namespace SlutProjekt_Bank.Classes
 {
     public static class Security
     {
-        // Dictionary to store email as the key and password as the value
+        // List of users
         public static List<User> Users = new()
         {
             new Client("hej123", "Jack", "Dorsay", "Jack@gmail.com")
