@@ -10,9 +10,12 @@ namespace SlutProjekt_Bank.Classes
     public static class Security
     {
         // Dictionary to store email as the key and password as the value
-        public static List<User> Users = new();
+        public static List<User> Users = new()
+        {
+            new Client("hej123", "Jack", "Dorsay", "Jack@gmail.com")
+        };
 
-        public static bool AuthenticateUser()
+        public static Client Login()
         {
             int failedAttempts = 0;
             DateTime? lockoutEndTime = null;
@@ -46,7 +49,7 @@ namespace SlutProjekt_Bank.Classes
                 if (user != null && user.Password == inputPassword)
                 {
                     Console.WriteLine("Login successful");
-                    return true;
+                    return (Client)user;
                 }
                 else
                 {
@@ -60,22 +63,6 @@ namespace SlutProjekt_Bank.Classes
                         Console.WriteLine("Too many failed attempts. You are locked out for 1 minute.");
                     }
                 }
-            }
-        }
-
-
-        public static bool Login()
-        {
-            Console.WriteLine("Login");
-            if (AuthenticateUser())
-            {
-                Console.WriteLine("Login successful");
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Login failed");
-                return false;
             }
         }
     }
