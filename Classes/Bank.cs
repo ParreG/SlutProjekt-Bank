@@ -28,24 +28,33 @@ namespace SlutProjekt_Bank.Classes
             {
                 Console.Clear();
                 Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("╔═════════════════════════════════╗");
+                Console.WriteLine("║         Välkommen till Menyn    ║");
+                Console.WriteLine("╚═════════════════════════════════╝");
+                Console.ResetColor();
 
                 Console.WriteLine("Hej och välkommen till bankens meny.");
                 Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\". \nTryck på \"Ënter\" när du vill välja den menyn du är nöjd med.");
                 Console.WriteLine();
 
                 //Loopar igenom menyvalen och markerar det valda alternativet. Detta gör att jag inte behöver repetera samma del flera gånger. 
+                Console.WriteLine("╔═════════════════════════════════╗");
                 for (int i = 0; i < menuOptions.Length; i++)
                 {
                     if (i == menuSelected)
                     {
                         //För att menyn ska synas bättre la jag till en pil innan menyn också
-                        Console.WriteLine("->" + menuOptions[i] + " <------");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine($"║ > {menuOptions[i].PadRight(15)} <   ║");
+                        Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine(menuOptions[i]);
+                        Console.WriteLine($"║   {menuOptions[i].PadRight(15)}     ║");
                     }
                 }
+                Console.WriteLine("╚═════════════════════════════════╝");
 
                 //Läser in användarens tangenttryck.
                 var keyPressed = Console.ReadKey();
