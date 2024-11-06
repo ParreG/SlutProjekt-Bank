@@ -25,9 +25,9 @@ namespace SlutProjekt_Bank.Classes
                 Console.Clear();
                 Console.CursorVisible = false;
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("╔═════════════════════════════════╗");
-                Console.WriteLine("║" + "Välkommen till Menyn".PadLeft((menuWidth + "Välkommen till Menyn".Length) / 2).PadRight(menuWidth - 2) + "║");
-                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
+                Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
+                Console.WriteLine("║" + "\t\tVälkommen till Menyn".PadLeft((menuWidth + "Välkommen till Menyn".Length) / 2).PadRight(menuWidth + 8) + "║");
+                Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
                 Console.ResetColor();
 
                 Console.WriteLine("Hej och välkommen till bankens meny.");
