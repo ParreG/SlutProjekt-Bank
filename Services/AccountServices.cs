@@ -9,7 +9,7 @@ namespace SlutProjekt_Bank.Services
 {
     public class AccountServices
     {
-        
+
         public List<Account>? Accounts { get; set; }
         public void AccountManager()
         {
@@ -28,8 +28,8 @@ namespace SlutProjekt_Bank.Services
         }
         public void Transfer()
         {
-            CreateAccount( 100, "sek", "konto1");
-            CreateAccount( 200, "sek", "konto2");
+            CreateAccount(100, "sek", "konto1");
+            CreateAccount(200, "sek", "konto2");
             if (Accounts == null || Accounts.Count < 2)
             {
                 Console.WriteLine("Finns inga konton att föra över pengar mellan");
@@ -131,18 +131,41 @@ namespace SlutProjekt_Bank.Services
                 return false;
             }
         }
-        public void SavingAccount(Client client, decimal balance, string currency)
+        public static void SavingAccount(User user, decimal initialBalance, string currency)
         {
+            Console.WriteLine(); //för extra utrymme
             Console.WriteLine("Vad härligt att du vill öppna ett sparkonto.");
-            Console.WriteLine("Vad ska sparkontot heta: ");
+            Console.WriteLine("Hos oss får du 2.4% ränta på dina pengar per 30 sekunder.");
+
+            Console.Write("Vad ska sparkontot heta: ");
             string savingAccountName = Console.ReadLine();
-            Account savingAccount = new Account(balance, currency, savingAccountName);
 
+            Console.WriteLine("Hur mycket vill du sätta in som startbelopp?");
+            decimal balance;
 
-            // Hur mycket ska överföras till kontot? 
-            // från vilket konto?
+            if (decimal.TryParse(Console.ReadLine(), out balance) && balance >= 0)
+            {
+                Account savingAccount = new Account(balance, currency, savingAccountName);
 
-            //Måste ta med TransferMoney(); ?
+                Console.WriteLine($"Ditt sparkonto '{savingAccountName}' har skapats med ett startbelopp på {balance}{currency}.");
+
+                //Skapar en thread som alltid kommer gå i bakgrunden och ge räntan till kunden. 
+                Thread interest = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(30000);
+                        balance += (balance * 0.024m);
+                    }
+
+                });
+                interest.Start();
+
+            }
+            else
+            {
+                Console.WriteLine("Felaktigt belopp angivet. Kontot kunde inte skapas.");
+            }
         }
 
         public void DisplayBalance(List<Account> Accounts)
@@ -151,7 +174,7 @@ namespace SlutProjekt_Bank.Services
             {
                 Console.WriteLine($"Current balance: {account.Balance}");
             }
-            
+
         }
     }
 }

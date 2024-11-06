@@ -11,6 +11,8 @@ namespace SlutProjekt_Bank.Classes
         public decimal Balance { get; set; }
         public string Currency { get; set; }
         public string AccountName { get; set; }
+        public User AccountHolder { get; set; }
+
         public Account(decimal balance, string currency, string accountName)
         {
             Balance = balance;
@@ -18,7 +20,9 @@ namespace SlutProjekt_Bank.Classes
             AccountName = accountName;
         }
 
-       
-
     }
+
+    
+
+
 }
