@@ -59,12 +59,12 @@ namespace SlutProjekt_Bank.Classes
                             case 0:
                                 // Inloggning
                                 Console.WriteLine("Du valde Inloggning");
-                                
+                                //Kod för inlogg
                                 break;
                             case 1:
                                 // Registrering
                                 Console.WriteLine("Du valde Registrering");
-                                
+                                //kod för registrering
                                 break;
                             case 2:
                                 // Avsluta programmet
