@@ -68,12 +68,12 @@ namespace SlutProjekt_Bank.Classes
                         {
                             case 0:
                                 Console.WriteLine("Du valde Inloggning");
-                                // Implement login logic here
+                                // här ska koden för inloggning komma
                                 break;
                             case 1:
                                 Console.WriteLine("Du valde Registrering");
-                                
-                                // Implement registration logic here
+
+                                // här ska koden för registrering komma!
                                 
                                 break;
                             case 2:

@@ -11,6 +11,13 @@ namespace SlutProjekt_Bank.Services
     {
 
         public List<Account>? Accounts { get; set; }
+
+        public void AccountMeny()
+        {
+            //Ska andra menyn för inloggade användare gå här?
+        }
+
+
         public void AccountManager()
         {
             Console.WriteLine("Skriv in Kontonamn");
