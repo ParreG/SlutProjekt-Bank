@@ -15,7 +15,7 @@ namespace SlutProjekt_Bank.Classes
             new Client("hej123", "Jack", "Dorsay", "Jack@gmail.com")
         };
 
-        public static Client Login()
+        public static User Login()
         {
             int failedAttempts = 0;
             DateTime? lockoutEndTime = null;
@@ -49,7 +49,7 @@ namespace SlutProjekt_Bank.Classes
                 if (user != null && user.Password == inputPassword)
                 {
                     Console.WriteLine("Login successful");
-                    return (Client)user;
+                    return user;
                 }
                 else
                 {
