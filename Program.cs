@@ -1,4 +1,5 @@
 ﻿using SlutProjekt_Bank.Classes;
+using SlutProjekt_Bank.Services;
 
 namespace SlutProjekt_Bank
 {
@@ -8,10 +9,11 @@ namespace SlutProjekt_Bank
         {
             //Console.WriteLine("Hej Abdi");
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-
             Bank bank = new Bank();
 
             bank.ShowMenu();
+
+
         }
     }
 }
