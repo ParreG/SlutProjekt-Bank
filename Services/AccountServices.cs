@@ -33,7 +33,24 @@ namespace SlutProjekt_Bank.Services
             DisplayBalance(Accounts);
 
         }
-        public void Transfer()
+
+        //public void Transfer(BankAccount toAccount, decimal amount)
+        //{
+
+        //    if (amount > 0 && amount <= Balance)
+        //    {
+        //        Balance -= amount;
+        //        toAccount.Balance += amount;
+        //        Console.WriteLine($"{Owner} skickade {amount} till {toAccount.Owner}");
+        //    }
+        //    else
+        //    {
+
+        //        Console.WriteLine("Inte tillräckligt med pengar eller ogiltigt belopp.");
+        //    }
+        //}
+
+        public void PersonalTransfer()
         {
             CreateAccount(100, "sek", "konto1");
             CreateAccount(200, "sek", "konto2");
@@ -138,6 +155,7 @@ namespace SlutProjekt_Bank.Services
                 return false;
             }
         }
+
         public static void SavingAccount(User user, decimal initialBalance, string currency)
         {
             Console.WriteLine(); //för extra utrymme
@@ -148,13 +166,13 @@ namespace SlutProjekt_Bank.Services
             string savingAccountName = Console.ReadLine();
 
             Console.WriteLine("Hur mycket vill du sätta in som startbelopp?");
-            decimal balance;
+            decimal sbalance;
 
-            if (decimal.TryParse(Console.ReadLine(), out balance) && balance >= 0)
+            if (decimal.TryParse(Console.ReadLine(), out sbalance) && sbalance >= 0)
             {
-                Account savingAccount = new Account(balance, currency, savingAccountName);
+                Account savingAccount = new Account(sbalance, currency, savingAccountName);
 
-                Console.WriteLine($"Ditt sparkonto '{savingAccountName}' har skapats med ett startbelopp på {balance}{currency}.");
+                Console.WriteLine($"Ditt sparkonto '{savingAccountName}' har skapats med ett startbelopp på {sbalance}{currency}.");
 
                 //Skapar en thread som alltid kommer gå i bakgrunden och ge räntan till kunden. 
                 Thread interest = new Thread(() =>
@@ -162,7 +180,7 @@ namespace SlutProjekt_Bank.Services
                     while (true)
                     {
                         Thread.Sleep(30000);
-                        balance += (balance * 0.024m);
+                        sbalance += (sbalance * 0.024m);
                     }
 
                 });
