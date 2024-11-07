@@ -39,8 +39,18 @@ namespace SlutProjekt_Bank.Classes
                 {
                     if (i == menuSelected)
                     {
+                        
+                        // Set the default color for the border
+                        Console.ResetColor();
+                        Console.Write("║ ");
+
+                        // Set the color for the text
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("║ > " + menuOptions[i].PadRight(menuWidth - 7) + " <║");
+                        Console.Write("> " + menuOptions[i].PadRight(menuWidth - 8) + " <");
+
+                        // Change back to the default color for the closing border
+                        Console.ResetColor();
+                        Console.WriteLine(" ║");
                         Console.ResetColor();
                     }
                     else
