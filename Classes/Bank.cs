@@ -79,12 +79,21 @@ namespace SlutProjekt_Bank.Classes
                             case 0:
                                 Console.WriteLine("Du valde Inloggning");
                                 // här ska koden för inloggning komma
+                                var user = Security.Login();
+                                if (user != null)
+                                {
+                                    Console.WriteLine($"Välkommen, {user.Name} {user.Surname}!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Inloggning misslyckades.");
+                                }
                                 break;
                             case 1:
                                 Console.WriteLine("Du valde Registrering");
 
                                 // här ska koden för registrering komma!
-                                
+                                Security.Register();
                                 break;
                             case 2:
                                 Console.WriteLine("Avslutar programmet...");
@@ -100,8 +109,5 @@ namespace SlutProjekt_Bank.Classes
                 }
             }
         }
-
-
-
     }
 }
