@@ -65,5 +65,33 @@ namespace SlutProjekt_Bank.Classes
                 }
             }
         }
+        public static void Register()
+        {
+            Console.Write("Ange förnamn: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Ange efternamn: ");
+            string surname = Console.ReadLine();
+
+            Console.Write("Ange email: ");
+            string email = Console.ReadLine();
+
+            Console.Write("Ange lösenord: ");
+            string password = Console.ReadLine();
+
+            // Kontrollera om användaren redan existerar baserat på e-post
+            if (Users.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine("En användare med denna e-postadress finns redan.");
+                return;
+            }
+
+            // Skapa en ny användare
+            var newUser = new Client(password, name, surname, email);
+            Users.Add(newUser);
+
+            Console.WriteLine("Registrering lyckades! Här är din information:");
+            newUser.UserInformation();
+        }
     }
 }
