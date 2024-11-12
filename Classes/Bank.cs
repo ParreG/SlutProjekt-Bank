@@ -83,6 +83,7 @@ namespace SlutProjekt_Bank.Classes
                                 if (user != null)
                                 {
                                     Console.WriteLine($"Välkommen, {user.Name} {user.Surname}!");
+                                    ShowLoggedInMenu(user);
                                 }
                                 else
                                 {
@@ -97,6 +98,86 @@ namespace SlutProjekt_Bank.Classes
                                 break;
                             case 2:
                                 Console.WriteLine("Avslutar programmet...");
+                                programAktivt = false;
+                                break;
+                        }
+                        if (programAktivt)
+                        {
+                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+                            Console.ReadKey(true);
+                        }
+                        break;
+                }
+            }
+
+            
+        }
+        public void ShowLoggedInMenu(User user)
+        {
+            bool programAktivt = true;
+            int menuSelected = 0;
+            string[] menuOptions = new string[] { "Visa kontoinformation", "Överför pengar", "Logga ut" };
+            int menuWidth = 35;
+
+            while (programAktivt)
+            {
+                Console.Clear();
+                Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
+                Console.WriteLine("║" + $"\t\tVälkommen {user.Name} {user.Surname}".PadLeft((menuWidth + $"Välkommen {user.Name} {user.Surname}".Length) / 2).PadRight(menuWidth + 8) + "║");
+                Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
+                Console.ResetColor();
+
+                Console.WriteLine("Hej och välkommen till bankens inloggade meny.");
+                Console.WriteLine("Du kan navigera med \"⬇️\" och \"⬆️\".");
+                Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
+                Console.WriteLine();
+                Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
+                for (int i = 0; i < menuOptions.Length; i++)
+                {
+                    if (i == menuSelected)
+                    {
+                        Console.ResetColor();
+                        Console.Write("║ ");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("> " + menuOptions[i].PadRight(menuWidth - 8) + " <");
+                        Console.ResetColor();
+                        Console.WriteLine(" ║");
+                    }
+                    else
+                    {
+                        Console.WriteLine("║   " + menuOptions[i].PadRight(menuWidth - 5) + "║");
+                    }
+                }
+                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
+
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        if (menuSelected < menuOptions.Length - 1)
+                            menuSelected++;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (menuSelected > 0)
+                            menuSelected--;
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        switch (menuSelected)
+                        {
+                            case 0:
+                                Console.WriteLine("Visar kontoinformation...");
+                                // Visa kontoinformation
+                                break;
+                            case 1:
+                                Console.WriteLine("Överför pengar...");
+                                // Kod för överföring av pengar
+                                break;
+                            case 2:
+                                Console.WriteLine("Avsluta...");
                                 programAktivt = false;
                                 break;
                         }
