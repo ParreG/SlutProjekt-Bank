@@ -103,6 +103,7 @@ namespace SlutProjekt_Bank.Services
 
 
         }
+
         public Account CreateAccount(decimal initialBalance, string currency, string accountName)
         {
             var account = new Account(initialBalance, currency, accountName);
@@ -116,6 +117,7 @@ namespace SlutProjekt_Bank.Services
 
             return account;
         }
+
         public void displayAccounts()
         {
             foreach (Account account in Accounts)
@@ -155,6 +157,56 @@ namespace SlutProjekt_Bank.Services
                 return false;
             }
         }
+
+        public void Loan(Account account)
+        {
+             /*
+             Lån funktion made by Parre. Ränta på 5% var 60 sekunder. Vi ska bli rika XD
+             Har ej testat den men hoppas den funkar!
+             */
+            decimal totalBalance = Accounts.Sum(a => a.Balance);
+            decimal maxLoanAmount = totalBalance * 5;
+            decimal loanAmount;
+
+            while (true)
+            {
+                Console.WriteLine($"\nDu kan maximalt låna {maxLoanAmount} {account.Currency}. Hur mycket vill du låna?");
+
+                if (!decimal.TryParse(Console.ReadLine(), out loanAmount) || loanAmount <= 0 || loanAmount > maxLoanAmount)
+                {
+                    Console.WriteLine("Ogiltigt belopp eller överstiger maximalt lånebelopp.");
+                    return;
+
+                }
+                else
+                {
+                    break;
+
+                }
+
+            }
+            
+            account.Balance += loanAmount;
+            Console.WriteLine($"Du har lånat {loanAmount} {account.Currency}. Ränta: 5% per 60 sekunder.");
+            Console.WriteLine($"Nytt saldo efter lånet: {account.Balance} {account.Currency}");
+
+            Thread loanInterest = new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(60000); 
+
+                    decimal interest = loanAmount * 0.05m;
+                    loanAmount += interest;
+                    account.Balance -= interest;
+
+                    Console.WriteLine($"Löpande ränta på {interest} {account.Currency} tillagt. Aktuellt lånebelopp: {loanAmount} {account.Currency}. Nytt saldo: {account.Balance} {account.Currency}");
+                }
+            });
+
+            loanInterest.Start();
+        }
+
 
         public static void SavingAccount(User user, decimal initialBalance, string currency)
         {
