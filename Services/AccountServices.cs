@@ -12,12 +12,6 @@ namespace SlutProjekt_Bank.Services
 
         public List<Account>? Accounts { get; set; }
 
-        public void AccountMeny()
-        {
-            //Ska andra menyn för inloggade användare gå här?
-        }
-
-
         public void AccountManager()
         {
             Console.WriteLine("Skriv in Kontonamn");
@@ -158,54 +152,73 @@ namespace SlutProjekt_Bank.Services
             }
         }
 
-        public void Loan(Account account)
+        public void Loan(List<Account> accounts)
         {
-             /*
-             Lån funktion made by Parre. Ränta på 5% var 60 sekunder. Vi ska bli rika XD
-             Har ej testat den men hoppas den funkar!
-             */
-            decimal totalBalance = Accounts.Sum(a => a.Balance);
+
+            if (accounts == null || accounts.Count == 0)
+            {
+                Console.WriteLine("Det finns inga konton att sätta de inlånade pengarna i!\nVänligen öppna ett konto först!");
+                return;
+            }
+
+            Console.WriteLine("Välj ett konto för att sätta in lånebeloppet i:");
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Kontonamn: {accounts[i].AccountName}, Saldo: {accounts[i].Balance} {accounts[i].Currency}");
+            }
+
+            int accountIndex;
+            while (true)
+            {
+                Console.Write("Ange kontonummer: ");
+                if (int.TryParse(Console.ReadLine(), out accountIndex) && accountIndex > 0 && accountIndex <= accounts.Count)
+                {
+                    break;
+                }
+                Console.WriteLine("Ogiltigt val, försök igen.");
+            }
+
+            Account selectedAccount = accounts[accountIndex - 1];
+
+            decimal totalBalance = accounts.Sum(a => a.Balance);
             decimal maxLoanAmount = totalBalance * 5;
             decimal loanAmount;
 
             while (true)
             {
-                Console.WriteLine($"\nDu kan maximalt låna {maxLoanAmount} {account.Currency}. Hur mycket vill du låna?");
+                Console.WriteLine($"\nDu kan maximalt låna {maxLoanAmount} {selectedAccount.Currency}. Hur mycket vill du låna?");
 
                 if (!decimal.TryParse(Console.ReadLine(), out loanAmount) || loanAmount <= 0 || loanAmount > maxLoanAmount)
                 {
                     Console.WriteLine("Ogiltigt belopp eller överstiger maximalt lånebelopp.");
                     return;
-
                 }
                 else
                 {
                     break;
-
                 }
-
             }
-            
-            account.Balance += loanAmount;
-            Console.WriteLine($"Du har lånat {loanAmount} {account.Currency}. Ränta: 5% per 60 sekunder.");
-            Console.WriteLine($"Nytt saldo efter lånet: {account.Balance} {account.Currency}");
+
+            selectedAccount.Balance += loanAmount;
+            Console.WriteLine($"Du har lånat {loanAmount} {selectedAccount.Currency}. Ränta: 5% per 60 sekunder.");
+            Console.WriteLine($"Nytt saldo efter lånet: {selectedAccount.Balance} {selectedAccount.Currency}");
 
             Thread loanInterest = new Thread(() =>
             {
                 while (true)
                 {
-                    Thread.Sleep(60000); 
+                    Thread.Sleep(60000);
 
                     decimal interest = loanAmount * 0.05m;
                     loanAmount += interest;
-                    account.Balance -= interest;
 
-                    Console.WriteLine($"Löpande ränta på {interest} {account.Currency} tillagt. Aktuellt lånebelopp: {loanAmount} {account.Currency}. Nytt saldo: {account.Balance} {account.Currency}");
+                    Console.WriteLine($"Löpande ränta på {interest} {selectedAccount.Currency} tillagt. Aktuellt lånebelopp: {loanAmount} {selectedAccount.Currency}. Nytt saldo: {selectedAccount.Balance} {selectedAccount.Currency}");
                 }
             });
 
             loanInterest.Start();
         }
+
 
 
         public static void SavingAccount(User user, decimal initialBalance, string currency)

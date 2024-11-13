@@ -12,7 +12,7 @@ namespace SlutProjekt_Bank.Classes
         // List of users
         public static List<User> Users = new()
         {
-            new Client("hej123", "Jack", "Dorsay", "Jack@gmail.com")
+            new Client("123", "Jack", "Dorsay", "Jack7000")
         };
 
         public static User Login()

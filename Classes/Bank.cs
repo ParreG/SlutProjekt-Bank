@@ -114,10 +114,12 @@ namespace SlutProjekt_Bank.Classes
         }
         public void ShowLoggedInMenu(User user)
         {
+
             bool programAktivt = true;
             int menuSelected = 0;
-            string[] menuOptions = new string[] { "Visa kontoinformation", "Överför pengar", "Logga ut" };
+            string[] menuOptions = new string[] { "Visa kontoinformation", "Öppna konto" ,"låna pengar","Överför pengar", "Logga ut" };
             int menuWidth = 35;
+            AccountServices accountServices = new AccountServices();
 
             while (programAktivt)
             {
@@ -172,11 +174,26 @@ namespace SlutProjekt_Bank.Classes
                                 Console.WriteLine("Visar kontoinformation...");
                                 // Visa kontoinformation
                                 break;
+
                             case 1:
+                                Console.WriteLine("Öppna ett konto... Sparkonto eller vanlig?");
+
+                                //accountServices.SavingAccount(user, 0m, "Sek");
+                                // ska få alternativ för vanlig eller sparkonto!
+                                break;
+
+                            case 2:
+                                
+                                accountServices.Loan(accountServices.Accounts); 
+                                
+                                break;
+
+                            case 3:
                                 Console.WriteLine("Överför pengar...");
                                 // Kod för överföring av pengar
                                 break;
-                            case 2:
+
+                            case 4:
                                 Console.WriteLine("Avsluta...");
                                 programAktivt = false;
                                 break;
