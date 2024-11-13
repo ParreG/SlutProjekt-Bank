@@ -11,23 +11,62 @@ namespace SlutProjekt_Bank.Services
     {
 
         public List<Account>? Accounts { get; set; }
+        private User _user;
+
+        
 
         public void AccountManager()
         {
-            Console.WriteLine("Skriv in Kontonamn");
-            var accountName = Console.ReadLine();
-            Console.WriteLine("Skriv in valuta");
-            var currency = Console.ReadLine();
-            Console.WriteLine("Skriv in saldo");
-            var initialBalance = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Vad vill du öppna för konto?");
+            string[] menuChoice = new string[]{"1. Vanlig konto", "2. Sparkonto"};
 
-            CreateAccount(initialBalance, currency, accountName);
+            for (int i = 0; i < menuChoice.Length; i++)
+            {
+                Console.WriteLine(menuChoice[i]);
+            }
+            Console.WriteLine();// extra utrymme!
+            Console.WriteLine("Skriv in nummer på det valet du vill göra!");
+            Console.Write("Ditt val: ");
 
-            displayAccounts();
-            DisplayBalance(Accounts);
+            int choice;
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out choice) || (choice != 1 && choice != 2))
+                {
+                    Console.WriteLine("Ogiltigt val. Försök igen.");
+                    
+                }
+                else
+                {
+                    break;
+                }
+            }
+            
+
+            if (choice == 1)
+            {
+                Console.Write("Skriv in Kontonamn: ");
+                var accountName = Console.ReadLine();
+                Console.Write("Skriv in valuta: ");
+                var currency = Console.ReadLine();
+                Console.Write("Skriv in saldo: ");
+                var initialBalance = decimal.Parse(Console.ReadLine()); //Denna kan inte hantera fel input än!
+
+                CreateAccount(initialBalance, currency, accountName);
+
+                displayAccounts();
+                DisplayBalance(Accounts);
+            }
+            else if (choice == 2)
+            {
+                SavingAccount(_user, 0, "Sek");
+            }
+
+           
 
         }
 
+        //
         //public void Transfer(BankAccount toAccount, decimal amount)
         //{
 
@@ -48,7 +87,7 @@ namespace SlutProjekt_Bank.Services
         {
             if (Accounts == null || Accounts.Count < 2)
             {
-                Console.WriteLine("Finns inga konton att föra över pengar mellan");
+                Console.WriteLine("Finns inga konton att föra över pengar mellan!\n Vänligen skapa ett konto först!");
                 return;
             }
 
@@ -92,8 +131,6 @@ namespace SlutProjekt_Bank.Services
                 Console.WriteLine($"Du förde över {amount} {fromAccount.Currency} från {fromAccount.AccountName} till {toAccount.AccountName}");
                 DisplayBalance(Accounts);
             }
-
-
         }
 
         public Account CreateAccount(decimal initialBalance, string currency, string accountName)
@@ -121,7 +158,8 @@ namespace SlutProjekt_Bank.Services
             {
                 foreach (Account account in Accounts)
                 {
-                    Console.WriteLine($"Kontonamn: {account.AccountName}, Valuta: {account.Currency}, Saldo: {account.Balance}");
+                    Console.WriteLine(); // för extra utrymme
+                    Console.WriteLine($"Kontonamn: {account.AccountName}\nValuta: {account.Currency}\nSaldo: {account.Balance}");
                 }
             }
         }
@@ -130,7 +168,7 @@ namespace SlutProjekt_Bank.Services
         {
             if (Accounts == null || Accounts.Count == 0)
             {
-                Console.WriteLine("Det finns inga konton");
+                Console.WriteLine("Det finns inga konton!");
             }
             else
             {
@@ -155,8 +193,7 @@ namespace SlutProjekt_Bank.Services
                 Console.WriteLine("Hur mycket vill du ta ut?");
                 decimal amount = decimal.Parse(Console.ReadLine());
                 if (account.Balance >= amount)
-                
-                account.Balance -= amount;
+                    account.Balance -= amount;
                 Console.WriteLine($"Du har tagit ut {amount} från {account.AccountName}");
             }
         }
@@ -171,7 +208,7 @@ namespace SlutProjekt_Bank.Services
             }
             else
             {
-                Console.WriteLine("Insufficient funds for transfer.");
+                Console.WriteLine("Otillräckliga medel för överföring.");
                 return false;
             }
         }
@@ -186,9 +223,10 @@ namespace SlutProjekt_Bank.Services
             }
 
             Console.WriteLine("Välj ett konto för att sätta in lånebeloppet i:");
+            Console.WriteLine();
             for (int i = 0; i < accounts.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Kontonamn: {accounts[i].AccountName}, Saldo: {accounts[i].Balance} {accounts[i].Currency}");
+                Console.WriteLine($"------- Konto nummer : {i + 1} -------\nKontonamn: {accounts[i].AccountName}, Saldo: {accounts[i].Balance} {accounts[i].Currency}\n\n");
             }
 
             int accountIndex;
@@ -214,7 +252,7 @@ namespace SlutProjekt_Bank.Services
 
                 if (!decimal.TryParse(Console.ReadLine(), out loanAmount) || loanAmount <= 0 || loanAmount > maxLoanAmount)
                 {
-                    Console.WriteLine("Ogiltigt belopp eller överstiger maximalt lånebelopp.");
+                    Console.WriteLine("Ogiltigt belopp. Du kan bara låna 5x av det totala som du har i ditt konto!");
                     return;
                 }
                 else
@@ -225,7 +263,7 @@ namespace SlutProjekt_Bank.Services
 
             selectedAccount.Balance += loanAmount;
             Console.WriteLine($"Du har lånat {loanAmount} {selectedAccount.Currency}. Ränta: 5% per 60 sekunder.");
-            Console.WriteLine($"Nytt saldo efter lånet: {selectedAccount.Balance} {selectedAccount.Currency}");
+            Console.WriteLine($"Nytt saldo efter lånet: {selectedAccount.Balance:F2} {selectedAccount.Currency}");
 
             Thread loanInterest = new Thread(() =>
             {
@@ -236,16 +274,14 @@ namespace SlutProjekt_Bank.Services
                     decimal interest = loanAmount * 0.05m;
                     loanAmount += interest;
 
-                    Console.WriteLine($"Löpande ränta på {interest} {selectedAccount.Currency} tillagt. Aktuellt lånebelopp: {loanAmount} {selectedAccount.Currency}. Nytt saldo: {selectedAccount.Balance} {selectedAccount.Currency}");
+                    Console.WriteLine($"Löpande ränta på {interest} {selectedAccount.Currency} tillagt. Aktuellt lånebelopp: {loanAmount}{selectedAccount.Currency}.");
                 }
             });
 
             loanInterest.Start();
         }
 
-
-
-        public static void SavingAccount(User user, decimal initialBalance, string currency)
+        public Account SavingAccount(User user, decimal initialBalance, string currency)
         {
             Console.WriteLine(); //för extra utrymme
             Console.WriteLine("Vad härligt att du vill öppna ett sparkonto.");
@@ -257,36 +293,49 @@ namespace SlutProjekt_Bank.Services
             Console.WriteLine("Hur mycket vill du sätta in som startbelopp?");
             decimal sbalance;
 
+            
             if (decimal.TryParse(Console.ReadLine(), out sbalance) && sbalance >= 0)
             {
                 Account savingAccount = new Account(sbalance, currency, savingAccountName);
 
-                Console.WriteLine($"Ditt sparkonto '{savingAccountName}' har skapats med ett startbelopp på {sbalance}{currency}.");
+                Console.WriteLine($"Ditt sparkonto '{savingAccountName}' har skapats med ett startbelopp på {sbalance} {currency}.");
 
-                //Skapar en thread som alltid kommer gå i bakgrunden och ge räntan till kunden. 
+                
+                if (Accounts == null)
+                {
+                    Accounts = new List<Account>();
+                }
+
+                
+                Accounts.Add(savingAccount);
+
+                
                 Thread interest = new Thread(() =>
                 {
                     while (true)
                     {
-                        Thread.Sleep(30000);
-                        sbalance += (sbalance * 0.024m);
+                        Thread.Sleep(30000); // 30 sekunder
+                        savingAccount.Balance += (savingAccount.Balance * 0.024m); // Lägg till 2,4 % ränta
+                        Console.WriteLine($"Ny ränta tillagd! Aktuellt saldo på '{savingAccount.AccountName}': {savingAccount.Balance:F2} {savingAccount.Currency}"); //avrundar till 2 decimaler
                     }
-
                 });
                 interest.Start();
 
+                return savingAccount; // Returnera det skapade kontot
             }
             else
             {
                 Console.WriteLine("Felaktigt belopp angivet. Kontot kunde inte skapas.");
+                return null;
             }
         }
+
 
         public void DisplayBalance(List<Account> Accounts)
         {
             foreach (Account account in Accounts)
             {
-                Console.WriteLine($"Current balance: {account.Balance}");
+                Console.WriteLine($"Aktuellt saldo: {account.Balance}");
             }
 
         }
