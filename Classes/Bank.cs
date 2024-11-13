@@ -191,8 +191,8 @@ namespace SlutProjekt_Bank.Classes
 
                             case 3:
                                 Console.WriteLine("Överför pengar...");
-                                ShowLoggedInTransferMenu(user);
-                                accountServices.PersonalTransfer();
+                                ShowLoggedInTransferMenu(user, accountServices);
+                                
                                 break;
 
                             case 4:
@@ -209,14 +209,14 @@ namespace SlutProjekt_Bank.Classes
                 }
             }
         }
-        public void ShowLoggedInTransferMenu(User user)
+        public void ShowLoggedInTransferMenu(User user, AccountServices accountServices)
         {
 
             bool programAktivt = true;
             int menuSelected = 0;
             string[] menuOptions = new string[] {"Överföra till annan användare", "Överföra till eget konto", "Sätt in pengar", "Ta ut pengar"};
             int menuWidth = 35;
-            AccountServices accountServices = new AccountServices();
+            
 
             while (programAktivt)
             {
@@ -274,17 +274,17 @@ namespace SlutProjekt_Bank.Classes
 
                             case 1:
                                 Console.WriteLine("Överföra till eget konto");
-                              
+                                accountServices.PersonalTransfer();
                                 break;
 
                             case 2:
                                 Console.WriteLine("Sätt in pengar");
-                                
+                                accountServices.Deposit();
                                 break;
 
                             case 3:
                                 Console.WriteLine("Ta ut pengar");
-                               
+                               accountServices.Withdraw();
                                 break;
 
                         }
