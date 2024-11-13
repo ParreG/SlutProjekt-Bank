@@ -172,7 +172,7 @@ namespace SlutProjekt_Bank.Classes
                         {
                             case 0:
                                 Console.WriteLine("Visar kontoinformation...");
-                                // Visa kontoinformation
+                                accountServices.displayAccounts();
                                 break;
 
                             case 1:
@@ -180,6 +180,7 @@ namespace SlutProjekt_Bank.Classes
 
                                 //accountServices.SavingAccount(user, 0m, "Sek");
                                 // ska få alternativ för vanlig eller sparkonto!
+                                accountServices.AccountManager();
                                 break;
 
                             case 2:
@@ -190,7 +191,7 @@ namespace SlutProjekt_Bank.Classes
 
                             case 3:
                                 Console.WriteLine("Överför pengar...");
-                                // Kod för överföring av pengar
+                                accountServices.PersonalTransfer();
                                 break;
 
                             case 4:

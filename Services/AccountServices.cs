@@ -46,8 +46,6 @@ namespace SlutProjekt_Bank.Services
 
         public void PersonalTransfer()
         {
-            CreateAccount(100, "sek", "konto1");
-            CreateAccount(200, "sek", "konto2");
             if (Accounts == null || Accounts.Count < 2)
             {
                 Console.WriteLine("Finns inga konton att föra över pengar mellan");
@@ -114,9 +112,17 @@ namespace SlutProjekt_Bank.Services
 
         public void displayAccounts()
         {
-            foreach (Account account in Accounts)
+            if (Accounts == null)
             {
-                Console.WriteLine($"Kontonamn: {account.AccountName}, Valuta: {account.Currency}, Saldo: {account.Balance}");
+                Console.WriteLine("Finns inga konton att visa.");
+                return;
+            }
+            else
+            {
+                foreach (Account account in Accounts)
+                {
+                    Console.WriteLine($"Kontonamn: {account.AccountName}, Valuta: {account.Currency}, Saldo: {account.Balance}");
+                }
             }
         }
 
