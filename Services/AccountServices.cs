@@ -126,20 +126,38 @@ namespace SlutProjekt_Bank.Services
             }
         }
 
-        public void Deposit(Account account, decimal amount)
+        public void Deposit()
         {
-            account.Balance += amount;
-        }
-
-        public void Withdraw(Account account, decimal amount)
-        {
-            if (account.Balance >= amount)
+            if (Accounts == null || Accounts.Count == 0)
             {
-                account.Balance -= amount;
+                Console.WriteLine("Det finns inga konton");
             }
             else
             {
-                Console.WriteLine("Du har inte tillräckligt med pengar på kontot");
+                Console.WriteLine("Vilket konto vill du sätta in pengar på?");
+                var account = Accounts.FirstOrDefault(x => x.AccountName == Console.ReadLine());
+                Console.WriteLine("Hur mycket pengar vill du sätta in?");
+                decimal amount = decimal.Parse(Console.ReadLine());
+                account.Balance += amount;
+            }
+        }
+
+        public void Withdraw()
+        {
+            if (Accounts == null || Accounts.Count == 0)
+            {
+                Console.WriteLine("Det finns inga konton");
+            }
+            else
+            {
+                Console.WriteLine("Vilket konto vill du ta ut pengar från?");
+                var account = Accounts.FirstOrDefault(x => x.AccountName == Console.ReadLine());
+                Console.WriteLine("Hur mycket vill du ta ut?");
+                decimal amount = decimal.Parse(Console.ReadLine());
+                if (account.Balance >= amount)
+                
+                account.Balance -= amount;
+                Console.WriteLine($"Du har tagit ut {amount} från {account.AccountName}");
             }
         }
 
