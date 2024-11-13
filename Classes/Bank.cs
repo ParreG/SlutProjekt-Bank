@@ -191,6 +191,7 @@ namespace SlutProjekt_Bank.Classes
 
                             case 3:
                                 Console.WriteLine("Överför pengar...");
+                                ShowLoggedInTransferMenu(user);
                                 accountServices.PersonalTransfer();
                                 break;
 
@@ -198,6 +199,94 @@ namespace SlutProjekt_Bank.Classes
                                 Console.WriteLine("Avsluta...");
                                 programAktivt = false;
                                 break;
+                        }
+                        if (programAktivt)
+                        {
+                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+                            Console.ReadKey(true);
+                        }
+                        break;
+                }
+            }
+        }
+        public void ShowLoggedInTransferMenu(User user)
+        {
+
+            bool programAktivt = true;
+            int menuSelected = 0;
+            string[] menuOptions = new string[] {"Överföra till annan användare", "Överföra till eget konto", "Sätt in pengar", "Ta ut pengar"};
+            int menuWidth = 35;
+            AccountServices accountServices = new AccountServices();
+
+            while (programAktivt)
+            {
+                Console.Clear();
+                Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
+                Console.WriteLine("║" + $"\t\tVälkommen {user.Name} {user.Surname}".PadLeft((menuWidth + $"Välkommen {user.Name} {user.Surname}".Length) / 2).PadRight(menuWidth + 8) + "║");
+                Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
+                Console.ResetColor();
+
+                Console.WriteLine("Hej och välkommen till bankens inloggade meny.");
+                Console.WriteLine("Du kan navigera med \"⬇️\" och \"⬆️\".");
+                Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
+                Console.WriteLine();
+                Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
+                for (int i = 0; i < menuOptions.Length; i++)
+                {
+                    if (i == menuSelected)
+                    {
+                        Console.ResetColor();
+                        Console.Write("║ ");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("> " + menuOptions[i].PadRight(menuWidth - 8) + " <");
+                        Console.ResetColor();
+                        Console.WriteLine(" ║");
+                    }
+                    else
+                    {
+                        Console.WriteLine("║   " + menuOptions[i].PadRight(menuWidth - 5) + "║");
+                    }
+                }
+                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
+
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        if (menuSelected < menuOptions.Length - 1)
+                            menuSelected++;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (menuSelected > 0)
+                            menuSelected--;
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        switch (menuSelected)
+                        {
+                            case 0:
+                                Console.WriteLine("Överföra till annan användare");
+                                
+                                break;
+
+                            case 1:
+                                Console.WriteLine("Överföra till eget konto");
+                              
+                                break;
+
+                            case 2:
+                                Console.WriteLine("Sätt in pengar");
+                                
+                                break;
+
+                            case 3:
+                                Console.WriteLine("Ta ut pengar");
+                               
+                                break;
+
                         }
                         if (programAktivt)
                         {
