@@ -39,7 +39,7 @@ namespace SlutProjekt_Bank.Classes
                 {
                     if (i == menuSelected)
                     {
-                        
+
                         // Set the default color for the border
                         Console.ResetColor();
                         Console.Write("║ ");
@@ -76,9 +76,8 @@ namespace SlutProjekt_Bank.Classes
                         Console.Clear();
                         switch (menuSelected)
                         {
-                            case 0:
+                            case 0: // inloggning
                                 Console.WriteLine("Du valde Inloggning");
-                                // här ska koden för inloggning komma
                                 var user = Security.Login();
                                 if (user != null)
                                 {
@@ -90,34 +89,34 @@ namespace SlutProjekt_Bank.Classes
                                     Console.WriteLine("Inloggning misslyckades.");
                                 }
                                 break;
-                            case 1:
+                            case 1: // Registrering
                                 Console.WriteLine("Du valde Registrering");
-
-                                // här ska koden för registrering komma!
                                 Security.Register();
                                 break;
-                            case 2:
+
+                            case 2: // Avsluta
                                 Console.WriteLine("Avslutar programmet...");
                                 programAktivt = false;
                                 break;
                         }
                         if (programAktivt)
                         {
-                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+                            Console.WriteLine();
+                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
                             Console.ReadKey(true);
                         }
                         break;
                 }
             }
 
-            
+
         }
         public void ShowLoggedInMenu(User user)
         {
 
             bool programAktivt = true;
             int menuSelected = 0;
-            string[] menuOptions = new string[] { "Visa kontoinformation", "Öppna konto" ,"låna pengar","Överför pengar", "Logga ut" };
+            string[] menuOptions = new string[] { "Visa kontoinformation", "Öppna konto", "låna pengar", "Överför pengar", "Logga ut" };
             int menuWidth = 35;
             AccountServices accountServices = new AccountServices();
 
@@ -170,39 +169,32 @@ namespace SlutProjekt_Bank.Classes
                         Console.Clear();
                         switch (menuSelected)
                         {
-                            case 0:
-                                Console.WriteLine("Visar kontoinformation...");
+                            case 0: //Account history
                                 accountServices.displayAccounts();
                                 break;
 
-                            case 1:
-                                Console.WriteLine("Öppna ett konto... Sparkonto eller vanlig?");
-
-                                //accountServices.SavingAccount(user, 0m, "Sek");
-                                // ska få alternativ för vanlig eller sparkonto!
+                            case 1: // Skapa konto, spar/vanlig
                                 accountServices.AccountManager();
                                 break;
 
-                            case 2:
-                                
-                                accountServices.Loan(accountServices.Accounts); 
-                                
+                            case 2: // Ta ett lån
+                                accountServices.Loan(accountServices.Accounts);
                                 break;
 
-                            case 3:
-                                Console.WriteLine("Överför pengar...");
+                            case 3: // meny för överföring
                                 ShowLoggedInTransferMenu(user, accountServices);
-                                
                                 break;
 
-                            case 4:
-                                Console.WriteLine("Avsluta...");
+                            case 4: // Utloggning, Tillbaka till menyn innan!
+                                Console.WriteLine("Loggar ut! Vänta några sekunder!");
+                                Thread.Sleep(3000);
                                 programAktivt = false;
                                 break;
                         }
                         if (programAktivt)
                         {
-                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+                            Console.WriteLine(); //För extra utrymme
+                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
                             Console.ReadKey(true);
                         }
                         break;
@@ -214,9 +206,9 @@ namespace SlutProjekt_Bank.Classes
 
             bool programAktivt = true;
             int menuSelected = 0;
-            string[] menuOptions = new string[] {"Överföra till annan användare", "Överföra till eget konto", "Sätt in pengar", "Ta ut pengar"};
+            string[] menuOptions = new string[] { "Överföra till annan användare", "Överföra till eget konto", "Sätt in pengar", "Ta ut pengar", "Tillbaka" };
             int menuWidth = 35;
-            
+
 
             while (programAktivt)
             {
@@ -269,7 +261,6 @@ namespace SlutProjekt_Bank.Classes
                         {
                             case 0:
                                 Console.WriteLine("Överföra till annan användare");
-                                
                                 break;
 
                             case 1:
@@ -284,17 +275,23 @@ namespace SlutProjekt_Bank.Classes
 
                             case 3:
                                 Console.WriteLine("Ta ut pengar");
-                               accountServices.Withdraw();
+                                accountServices.Withdraw();
+                                break;
+
+                            case 4:
+                                programAktivt = false;
                                 break;
 
                         }
                         if (programAktivt)
                         {
-                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn...");
+                            Console.WriteLine(); //För extra utrymme
+                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
                             Console.ReadKey(true);
                         }
                         break;
                 }
+
             }
         }
     }

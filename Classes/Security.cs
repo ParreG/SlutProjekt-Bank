@@ -12,7 +12,7 @@ namespace SlutProjekt_Bank.Classes
         // List of users
         public static List<User> Users = new()
         {
-            new Client("123", "Jack", "Dorsay", "Jack7000")
+            new Client("123", "Team", "Banken", "123")
         };
 
         public static User Login()
@@ -25,7 +25,7 @@ namespace SlutProjekt_Bank.Classes
                 // Check if the user is currently locked out
                 if (failedAttempts >= 3 && lockoutEndTime.HasValue && DateTime.Now < lockoutEndTime.Value)
                 {
-                    Console.WriteLine($"Too many failed attempts. Please wait {Math.Ceiling((lockoutEndTime.Value - DateTime.Now).TotalSeconds)} seconds before trying again.");
+                    Console.WriteLine($"För många misslyckade försök. Vänligen vänta {Math.Ceiling((lockoutEndTime.Value - DateTime.Now).TotalSeconds)} sekunder innan du försöker igen.");
                     Thread.Sleep((int)(lockoutEndTime.Value - DateTime.Now).TotalMilliseconds);
                     continue;
                 }
@@ -37,9 +37,9 @@ namespace SlutProjekt_Bank.Classes
                     lockoutEndTime = null;
                 }
 
-                Console.Write("Email: ");
+                Console.Write("E-post: ");
                 string inputEmail = Console.ReadLine();
-                Console.Write("Password: ");
+                Console.Write("Lösenord: ");
                 string inputPassword = Console.ReadLine();
 
                 // Find a user with the matching email
@@ -48,19 +48,19 @@ namespace SlutProjekt_Bank.Classes
                 // Check if the user exists and passwords match
                 if (user != null && user.Password == inputPassword)
                 {
-                    Console.WriteLine("Login successful");
+                    Console.WriteLine("Inloggning lyckades!");
                     return user;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid email or password.");
+                    Console.WriteLine("Ogiltig e-post eller lösenord.");
                     failedAttempts++;
 
                     // If 3 failed attempts, start a 1-minute lockout
                     if (failedAttempts >= 3)
                     {
                         lockoutEndTime = DateTime.Now.AddMinutes(1);
-                        Console.WriteLine("Too many failed attempts. You are locked out for 1 minute.");
+                        Console.WriteLine("För många misslyckade försök. Du är spärrad i 1 minut.");
                     }
                 }
             }
@@ -91,6 +91,7 @@ namespace SlutProjekt_Bank.Classes
             Users.Add(newUser);
 
             Console.WriteLine("Registrering lyckades! Här är din information:");
+            Console.WriteLine();
             newUser.UserInformation();
         }
     }
