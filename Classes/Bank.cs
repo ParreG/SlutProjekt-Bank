@@ -191,6 +191,7 @@ namespace SlutProjekt_Bank.Classes
 
                             case 3:
                                 Console.WriteLine("Överför pengar...");
+                                ShowLoggedInTransferMenu(user);
                                 accountServices.PersonalTransfer();
                                 break;
 
