@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SlutProjekt_Bank.Classes
 {
-    public class Admin(string password, string name, string surName, string email)
-        : User(password, name, surName, email)
+    public class Admin(string password, string name, string surName, string email, string accountType)
+        : User(password, name, surName, email, accountType)
     {
 
         // Create a new client
@@ -17,7 +17,7 @@ namespace SlutProjekt_Bank.Classes
             Console.WriteLine("Surname: "); string surName = Console.ReadLine();
             Console.WriteLine("Password: "); string password = Console.ReadLine();
             Console.WriteLine("Email: "); string email = Console.ReadLine();
-            Client client = new Client(password, name, surName, email);
+            Client client = new Client(password, name, surName, email, "User");
             Security.Users.Add(client);
         }
 

@@ -9,10 +9,12 @@ namespace SlutProjekt_Bank.Classes
 {
     public static class Security
     {
+        public static User CurrentUser { get; set; }
         // List of users
         public static List<User> Users = new()
         {
-            new Client("123", "Team", "Banken", "123")
+            new Client("123", "Team", "Banken", "123", "User"),
+            new Client("test", "Team", "Bankens", "test", "Admin")
         };
 
         public static User Login()
@@ -49,6 +51,7 @@ namespace SlutProjekt_Bank.Classes
                 if (user != null && user.Password == inputPassword)
                 {
                     Console.WriteLine("Inloggning lyckades!");
+                    CurrentUser = user;
                     return user;
                 }
                 else
@@ -87,7 +90,7 @@ namespace SlutProjekt_Bank.Classes
             }
 
             // Skapa en ny användare
-            var newUser = new Client(password, name, surname, email);
+            var newUser = new Client(password, name, surname, email, accountType: "User");
             Users.Add(newUser);
 
             Console.WriteLine("Registrering lyckades! Här är din information:");
