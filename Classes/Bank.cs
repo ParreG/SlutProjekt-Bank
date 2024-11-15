@@ -14,10 +14,10 @@ namespace SlutProjekt_Bank.Classes
         // HÄR ÄR MENYN
         public void ShowMenu()
         {
-            AccountServices accountServices = new AccountServices();
+            
             bool programAktivt = true;
             int menuSelected = 0;
-            string[] menuOptions = new string[] { "Inloggning", "Registrering", "Avsluta programmet" };
+            string[] menuOptions = new string[] { "Inloggning", "Avsluta programmet" };
             int menuWidth = 35; // Adjust this value to change the menu width
 
             while (programAktivt)
@@ -89,12 +89,8 @@ namespace SlutProjekt_Bank.Classes
                                     Console.WriteLine("Inloggning misslyckades.");
                                 }
                                 break;
-                            case 1: // Registrering
-                                Console.WriteLine("Du valde Registrering");
-                                Security.Register();
-                                break;
 
-                            case 2: // Avsluta
+                            case 1: // Avsluta
                                 Console.WriteLine("Avslutar programmet...");
                                 programAktivt = false;
                                 break;
@@ -118,90 +114,170 @@ namespace SlutProjekt_Bank.Classes
             int menuSelected = 0;
             string[] menuOptions = new string[] { "Visa kontoinformation", "Öppna konto", "låna pengar", "Överför pengar", "Logga ut" };
             int menuWidth = 35;
-            AccountServices accountServices = new AccountServices();
-
-            while (programAktivt)
+            string[] adminmenuOptions = new string[] { "Skapa konto", "Logga ut" };
+            
+            if (user.AccountType == "Admin")
             {
-                Console.Clear();
-                Console.CursorVisible = false;
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
-                Console.WriteLine("║" + $"\t\tVälkommen {user.Name} {user.Surname}".PadLeft((menuWidth + $"Välkommen {user.Name} {user.Surname}".Length) / 2).PadRight(menuWidth + 8) + "║");
-                Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
-                Console.ResetColor();
-
-                Console.WriteLine("Hej och välkommen till bankens inloggade meny.");
-                Console.WriteLine("Du kan navigera med \"⬇️\" och \"⬆️\".");
-                Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
-                Console.WriteLine();
-                Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
-                for (int i = 0; i < menuOptions.Length; i++)
+                while (programAktivt)
                 {
-                    if (i == menuSelected)
+                    Console.Clear();
+                    Console.CursorVisible = false;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
+                    Console.WriteLine("║" + "\t\tVälkommen till Menyn".PadLeft((menuWidth + "Välkommen till Menyn".Length) / 2).PadRight(menuWidth + 8) + "║");
+                    Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
+                    Console.ResetColor();
+
+                    Console.WriteLine("Hej och välkommen till bankens meny.");
+                    Console.WriteLine("Du kan navigera med \" ⬇️\" och \" ⬆️\".");
+                    Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
+                    Console.WriteLine();
+                    Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
+                    for (int i = 0; i < adminmenuOptions.Length; i++)
                     {
-                        Console.ResetColor();
-                        Console.Write("║ ");
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("> " + menuOptions[i].PadRight(menuWidth - 8) + " <");
-                        Console.ResetColor();
-                        Console.WriteLine(" ║");
+                        if (i == menuSelected)
+                        {
+
+                            // Set the default color for the border
+                            Console.ResetColor();
+                            Console.Write("║ ");
+
+                            // Set the color for the text
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("> " + adminmenuOptions[i].PadRight(menuWidth - 8) + " <");
+
+                            // Change back to the default color for the closing border
+                            Console.ResetColor();
+                            Console.WriteLine(" ║");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.WriteLine("║   " + adminmenuOptions[i].PadRight(menuWidth - 5) + "║");
+                        }
                     }
-                    else
+                    Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
+
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                    switch (keyInfo.Key)
                     {
-                        Console.WriteLine("║   " + menuOptions[i].PadRight(menuWidth - 5) + "║");
+                        case ConsoleKey.DownArrow:
+                            if (menuSelected < adminmenuOptions.Length - 1)
+                                menuSelected++;
+                            break;
+                        case ConsoleKey.UpArrow:
+                            if (menuSelected > 0)
+                                menuSelected--;
+                            break;
+                        case ConsoleKey.Enter:
+                            Console.Clear();
+                            switch (menuSelected)
+                            {
+                                case 0: // inloggning
+                                    Security.Register();
+                                    break;
+
+                                case 1: // Avsluta
+                                    Console.WriteLine("Avslutar programmet...");
+                                    programAktivt = false;
+                                    break;
+                            }
+                            if (programAktivt)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
+                                Console.ReadKey(true);
+                            }
+                            break;
                     }
                 }
-                Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
-
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-
-                switch (keyInfo.Key)
+            }
+            else
+            {
+                while (programAktivt)
                 {
-                    case ConsoleKey.DownArrow:
-                        if (menuSelected < menuOptions.Length - 1)
-                            menuSelected++;
-                        break;
-                    case ConsoleKey.UpArrow:
-                        if (menuSelected > 0)
-                            menuSelected--;
-                        break;
-                    case ConsoleKey.Enter:
-                        Console.Clear();
-                        switch (menuSelected)
+                    Console.Clear();
+                    Console.CursorVisible = false;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("╔" + new string('═', menuWidth + 16) + "╗");
+                    Console.WriteLine("║" + $"\t\tVälkommen {user.Name} {user.Surname}".PadLeft((menuWidth + $"Välkommen {user.Name} {user.Surname}".Length) / 2).PadRight(menuWidth + 8) + "║");
+                    Console.WriteLine("╚" + new string('═', menuWidth + 16) + "╝");
+                    Console.ResetColor();
+
+                    Console.WriteLine("Hej och välkommen till bankens inloggade meny.");
+                    Console.WriteLine("Du kan navigera med \"⬇️\" och \"⬆️\".");
+                    Console.WriteLine("Tryck på \"Enter\" när du vill välja den menyn du är nöjd med.");
+                    Console.WriteLine();
+                    Console.WriteLine("╔" + new string('═', menuWidth - 2) + "╗");
+                    for (int i = 0; i < menuOptions.Length; i++)
+                    {
+                        if (i == menuSelected)
                         {
-                            case 0: //Account history
-                                accountServices.displayAccounts();
-                                break;
-
-                            case 1: // Skapa konto, spar/vanlig
-                                accountServices.AccountManager();
-                                break;
-
-                            case 2: // Ta ett lån
-                                accountServices.Loan(accountServices.Accounts);
-                                break;
-
-                            case 3: // meny för överföring
-                                ShowLoggedInTransferMenu(user, accountServices);
-                                break;
-
-                            case 4: // Utloggning, Tillbaka till menyn innan!
-                                Console.WriteLine("Loggar ut! Vänta några sekunder!");
-                                Thread.Sleep(3000);
-                                programAktivt = false;
-                                break;
+                            Console.ResetColor();
+                            Console.Write("║ ");
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("> " + menuOptions[i].PadRight(menuWidth - 8) + " <");
+                            Console.ResetColor();
+                            Console.WriteLine(" ║");
                         }
-                        if (programAktivt)
+                        else
                         {
-                            Console.WriteLine(); //För extra utrymme
-                            Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
-                            Console.ReadKey(true);
+                            Console.WriteLine("║   " + menuOptions[i].PadRight(menuWidth - 5) + "║");
                         }
-                        break;
+                    }
+                    Console.WriteLine("╚" + new string('═', menuWidth - 2) + "╝");
+
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                    switch (keyInfo.Key)
+                    {
+                        case ConsoleKey.DownArrow:
+                            if (menuSelected < menuOptions.Length - 1)
+                                menuSelected++;
+                            break;
+                        case ConsoleKey.UpArrow:
+                            if (menuSelected > 0)
+                                menuSelected--;
+                            break;
+                        case ConsoleKey.Enter:
+                            Console.Clear();
+                            switch (menuSelected)
+                            {
+                                case 0: //Account history
+                                    AccountServices.displayAccounts();
+                                    break;
+
+                                case 1: // Skapa konto, spar/vanlig
+                                    AccountServices.AccountManager();
+                                    break;
+
+                                case 2: // Ta ett lån
+                                    AccountServices.Loan(AccountServices.Accounts);
+                                    break;
+
+                                case 3: // meny för överföring
+                                    ShowLoggedInTransferMenu(user);
+                                    break;
+
+                                case 4: // Utloggning, Tillbaka till menyn innan!
+                                    Console.WriteLine("Loggar ut! Vänta några sekunder!");
+                                    Thread.Sleep(3000);
+                                    programAktivt = false;
+                                    break;
+                            }
+                            if (programAktivt)
+                            {
+                                Console.WriteLine(); //För extra utrymme
+                                Console.WriteLine("Tryck på valfri tangent för att återgå till menyn!");
+                                Console.ReadKey(true);
+                            }
+                            break;
+                    }
                 }
             }
         }
-        public void ShowLoggedInTransferMenu(User user, AccountServices accountServices)
+        public void ShowLoggedInTransferMenu(User user)
         {
 
             bool programAktivt = true;
@@ -265,17 +341,17 @@ namespace SlutProjekt_Bank.Classes
 
                             case 1:
                                 Console.WriteLine("Överföra till eget konto");
-                                accountServices.PersonalTransfer();
+                                AccountServices.PersonalTransfer();
                                 break;
 
                             case 2:
                                 Console.WriteLine("Sätt in pengar");
-                                accountServices.Deposit();
+                                AccountServices.Deposit();
                                 break;
 
                             case 3:
                                 Console.WriteLine("Ta ut pengar");
-                                accountServices.Withdraw();
+                                AccountServices.Withdraw();
                                 break;
 
                             case 4:

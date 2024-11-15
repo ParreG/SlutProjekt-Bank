@@ -13,11 +13,12 @@ namespace SlutProjekt_Bank.Classes
         public string AccountName { get; set; }
         public User AccountHolder { get; set; }
 
-        public Account(decimal balance, string currency, string accountName)
+        public Account(User accountHolder, decimal balance, string currency, string accountName)
         {
             Balance = balance;
             Currency = currency;
             AccountName = accountName;
+            AccountHolder = accountHolder;
         }
 
     }
